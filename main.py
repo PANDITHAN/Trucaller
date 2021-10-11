@@ -25,11 +25,11 @@ def start(client, message):
 def newbt(client,callback_query):
     txt=callback_query.data
     if txt=="about":
-        callback_query.message.edit(text=f"`Bot`            :[MR TRUCALLER](t.me/Trucaller_tgbot)\nCreator : [agentnova](t.me/agentnova)\nLanguage: [Python3](https://python.org)\nLibrary : [Pyrogram](https://docs.pyrogram.org/) \nServer  : [Heroku](https://herokuapp.com/)",
+        callback_query.message.edit(text=f"`Bot`            : [MR TRUCALLER](t.me/Trucaller_tgbot)\nCreator : [PANDITHAN](t.me/PANDITHAN_SIR)\nLanguage: [Python3](https://python.org)\nLibrary : [Pyrogram](https://docs.pyrogram.org/) \nServer  : [ZEET](https://zeet.co/)",
                         disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("Give Feedback", url="t.me/agentnova")]]))
     elif txt=="code":
-        callback_query.message.edit(text="deploy your own bot \n bot repo\nSend me /yt", disable_web_page_preview=True)
+        callback_query.message.edit(text="deploy your own bot\n [click here](https://github.com/PANDITHAN/Trucaller)", disable_web_page_preview=True)
 
 
 
@@ -38,7 +38,15 @@ def about(client, message):
     client.send_message(chat_id=message.chat.id, reply_to_message_id=message.message_id,
                         text=f"`Bot`            : [MR TRUCALLER](t.me/Trucaller_tgbot)\nCreator : [PANDITHAN](t.me/PANDITHAN_SIR)\nLanguage: [Python3](https://python.org)\nLibrary : [Pyrogram](https://docs.pyrogram.org/) \nServer  : [ZEET](https://zeet.co/)",
                         disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("BOT CODE", url="callback_data="code")]]))
+            [[InlineKeyboardButton("BOT CODE", callback_data="code")]]))
+
+
+@app.on_message(filters.command(["help"]))
+def about(client, message):
+    client.send_message(chat_id=message.chat.id, reply_to_message_id=message.message_id,
+                        text=f"𝗔𝗩𝗘𝗟𝗔𝗕𝗟𝗘 𝗖𝗢𝗠𝗠𝗘𝗡𝗧𝗦 \n\n /start 𝙲𝚑𝚎𝚌𝚔 𝙸'𝚖 𝙰𝚕𝚒𝚟𝚎..\n/yt my YouTube channel\n/about bot about ,reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("Source", callback_data="code")]]))
+    check_status = check(message.chat.id)
 
 
 @app.on_message(filters.command(["yt"]))
