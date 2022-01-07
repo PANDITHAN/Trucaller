@@ -8,7 +8,7 @@ date=datetime.datetime.utcnow()
 date2=date.replace(tzinfo=pytz.UTC)
 date=date2.astimezone(pytz.timezone("Asia/Kolkata"))
 date=str(date)
-date=date[0:10]
+date = date[:10]
 today_date = int(date.replace("-", ""))
 
 def check(chatids):
@@ -22,21 +22,20 @@ def check(chatids):
     if result:
         date = result["date"]
         count = result["count"]
-        if not date == today_date:
+        if date != today_date:
             firebase.put('/users', chatid, data)
             out = "not yet"
+        elif count > 5:
+            out = "limit reached"
         else:
-            if count > 5:
-                out = "limit reached"
-            else:
-                count += 1
-                data2 = {
-                    "uname": chatid,
-                    "count": count,
-                    "date": today_date
-                }
-                firebase.put('/users', chatid, data2)
-                out = "not yet"
+            count += 1
+            data2 = {
+                "uname": chatid,
+                "count": count,
+                "date": today_date
+            }
+            firebase.put('/users', chatid, data2)
+            out = "not yet"
     else:
         firebase.put('/users', chatid, data)
         out = "not yet"
@@ -61,9 +60,7 @@ def truecaller_search(token, num):
         "authorization": token,
         "Host": "search5-noneu.truecaller.com"
     }
-    tresponse = requests.get(turl, headers=theaders, timeout=5)
-
-    return tresponse
+    return requests.get(turl, headers=theaders, timeout=5)
 
 def eyecon_search(num):
     url = "https://api.eyecon-app.com/app/getnames.jsp?cli=91" + num + "&lang=en&is_callerid=true&is_ic=true&cv=vc_312_vn_2.0.312_a&requestApi=URLconnection&source=Other"
@@ -78,8 +75,7 @@ def eyecon_search(num):
         "content-type": "application/x-www-form-urlencoded",
         "Host": "api.eyecon-app.com"
     }
-    response = requests.post(url, headers=headers, timeout=5)
-    return response
+    return requests.post(url, headers=headers, timeout=5)
 
 def fb_search(num):
     fburl = "https://api.eyecon-app.com/app/pic?cli=91" + num + "&is_callerid=true&size=big&type=0&cancelfresh=0&cv=vc_312_vn_2.0.312_a"
@@ -93,8 +89,7 @@ def fb_search(num):
         "e-auth": cred.E_AUTH,
         "Host": "api.eyecon-app.com"
     }
-    fbres = requests.get(fburl, headers=fbheaders)
-    return fbres
+    return requests.get(fburl, headers=fbheaders)
 
 def searches():
     a = firebase.get('/stats', 'total_searches')
@@ -135,8 +130,7 @@ def logreturn():
     total_search = f"`Total numbers searched` : **{searches['total_searches']}**"
     total_users = f"`Total bot users`                 : **{lst1.count('u')}**"
     active_today = f"`Active users today`          : **{act.count('d')}**"
-    stato=f"\n{total_search}\n{total_users}\n{active_today}"
-    return stato
+    return f"\n{total_search}\n{total_users}\n{active_today}"
 
 
 
